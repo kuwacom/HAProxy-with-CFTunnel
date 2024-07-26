@@ -1,0 +1,19 @@
+version: "3"
+services:
+  haproxy:
+    image: haproxy:latest
+    # ports:
+    # - "80:80"
+    volumes:
+      - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+
+  cloudflared:
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command:
+      - tunnel
+      - --no-autoupdate
+      - run
+    environment:
+      - TUNNEL_TOKEN=
+      - TUNNEL_TRANSPORT_PROTOCOL=http2
