@@ -6,10 +6,10 @@ services:
     # - "80:80"
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    restart: always
 
   cloudflared:
     image: cloudflare/cloudflared
-    restart: unless-stopped
     command:
       - tunnel
       - --no-autoupdate
@@ -17,3 +17,4 @@ services:
     environment:
       - TUNNEL_TOKEN=
       - TUNNEL_TRANSPORT_PROTOCOL=http2
+    restart: always
