@@ -1,4 +1,3 @@
-version: "3"
 services:
   haproxy:
     image: haproxy:latest
@@ -7,6 +6,12 @@ services:
     volumes:
       - ./haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
     restart: always
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   cloudflared:
     image: cloudflare/cloudflared
@@ -18,3 +23,9 @@ services:
       - TUNNEL_TOKEN=
       - TUNNEL_TRANSPORT_PROTOCOL=http2
     restart: always
+
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
